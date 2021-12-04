@@ -14,28 +14,34 @@ struct ContentView: View {
     @State private var amount  = ""
     
     private let units = ["meters", "kilometers", "feet", "yards"]
-    private let measurements = [UnitLength.meters, UnitLength.kilometers, UnitLength.feet, UnitLength.yards]
+    private let measurements = [UnitLength.meters,
+                                UnitLength.kilometers,
+                                UnitLength.feet,
+                                UnitLength.yards]
+    
     private var result: Double {
-        let selectedInputUnit = Measurement(value: Double(amount) ?? 0, unit: measurements[self.inputUnit])
-        
-        return selectedInputUnit.converted(to: measurements[self.outputUnit]).value
+        let selectedInputUnit = Measurement(
+            value: Double(amount) ?? 0,
+            unit: measurements[self.inputUnit]
+        )
+        return selectedInputUnit.converted(
+            to: measurements[self.outputUnit]
+        ).value
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Input Units Section")) {
-                    
-                   
                     Picker("Input Unit", selection: $inputUnit) {
                         ForEach(0..<self.units.count) {
                             Text("\(self.units[$0])")
                         }
-                    }.pickerStyle(SegmentedPickerStyle())
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
                     
                     TextField("Amount", text: $amount)
                         .keyboardType(.decimalPad)
-                    
                 }
                 
                 Section(header: Text("Output Units Section")) {
@@ -43,12 +49,14 @@ struct ContentView: View {
                         ForEach(0..<self.units.count) {
                             Text("\(self.units[$0])")
                         }
-                    }.pickerStyle(SegmentedPickerStyle())
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
                     
                     Text("Result: \(self.result, specifier: "%.2f") ")
-                    
+
                 }
-            }.navigationBarTitle(Text("Unit Conversion"))
+            }
+            .navigationBarTitle(Text("Unit Conversion"))
             
         }
     }
