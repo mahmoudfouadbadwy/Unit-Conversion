@@ -24,9 +24,7 @@ struct ContentView: View {
             value: Double(amount) ?? 0,
             unit: measurements[self.inputUnit]
         )
-        return selectedInputUnit.converted(
-            to: measurements[self.outputUnit]
-        ).value
+        return selectedInputUnit.converted(to: measurements[self.outputUnit]).value
     }
     
     var body: some View {
@@ -34,7 +32,7 @@ struct ContentView: View {
             Form {
                 Section(header: Text("Input Units Section")) {
                     Picker("Input Unit", selection: $inputUnit) {
-                        ForEach(0..<self.units.count) {
+                        ForEach(0..<self.units.count, id: \.self) {
                             Text("\(self.units[$0])")
                         }
                     }
@@ -46,7 +44,7 @@ struct ContentView: View {
                 
                 Section(header: Text("Output Units Section")) {
                     Picker("Output Unit", selection: $outputUnit) {
-                        ForEach(0..<self.units.count) {
+                        ForEach(0..<self.units.count, id: \.self) {
                             Text("\(self.units[$0])")
                         }
                     }
